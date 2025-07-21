@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.trendyol</groupId>
-    <artifactId>login-tests</artifactId>
+    <artifactId>sign-up-tests</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
         <!-- Selenium Java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.21.0</version>
+            <version>4.34.0</version>
         </dependency>
 
         <!-- JUnit 5 -->
@@ -26,21 +26,16 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.8.0</version>
+            <version>6.2.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+
     </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Maven Surefire Plugin (testleri çalıştırır) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M9</version>
-            </plugin>
-        </plugins>
-    </build>
-
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

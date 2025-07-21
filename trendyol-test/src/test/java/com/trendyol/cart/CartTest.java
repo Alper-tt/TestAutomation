@@ -1,5 +1,6 @@
-package com.trendyol;
+package com.trendyol.cart;
 
+import com.trendyol.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class LoginTest {
+public class CartTest {
 
     WebDriver driver;
     BaseTest baseTest;
@@ -36,14 +37,6 @@ public class LoginTest {
         baseTest.selectGender(driver,"kadın"); // dinamik cinsiyet seçim yapısı
         System.out.println("Cinsiyet seçildi");
         // Giriş yap'a tıkla
-        // Cinsiyet seçimi sonrası onboarding pop-up varsa kapat
-        try {
-            WebElement onboardingKapatBtn = baseTest.waitUntilClickable(driver, By.cssSelector("span.i-cancel"));
-            onboardingKapatBtn.click();
-            System.out.println("Onboarding popup kapatıldı.");
-        } catch (Exception e) {
-            System.out.println("Onboarding popup görünmedi.");
-        }
 
         WebElement girisYapButonu = baseTest.waitUntilClickable(driver,By.cssSelector("div.link.account-user"));
         girisYapButonu.click();
@@ -51,46 +44,32 @@ public class LoginTest {
 
 
 
-        // Yanlış bilgilerle giriş yap
-        System.out.println("Yanlış bilgilerle giriş yapılıyor");
+        System.out.println("Doğru bilgilerle giriş yapılıyor");
         WebElement email = baseTest.waitUntilVisible(driver, By.id("login-email"));
         WebElement password = baseTest.waitUntilVisible(driver, By.id("login-password-input"));
-        email.sendKeys("alper@test.com");
+        email.sendKeys("curat.orc.v.n@gmail.com");
         System.out.println("Mail yazıldı");
-        password.sendKeys("87654321");
-        System.out.println("Şifre yazıldı");
-
-        driver.findElement(By.cssSelector("button[type='submit']")).click();
-        System.out.println("Giriş yap butonu tıklandı");
-
-        // Hata mesajını kontrol et
-        try {
-            WebElement errorText = driver.findElement(By.id("error-box-wrapper"));
-            Assertions.assertTrue(errorText.isDisplayed());
-            System.out.println("Başarılı, hata mesajı gösterildi");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        driver.navigate().refresh();
-
-        System.out.println("Sayfa yenilendi");
-
-
-        System.out.println("Doğru bilgilerle giriş yapılıyor");
-        email = baseTest.waitUntilVisible(driver, By.id("login-email"));
-        password = baseTest.waitUntilVisible(driver, By.id("login-password-input"));
-        email.sendKeys("alpertopraktepe46@gmail.com");
-        System.out.println("Mail yazıldı");
-        password.sendKeys("Alper1903bjk*");
+        password.sendKeys("ETMv3ynRHJv80Gt");
         System.out.println("Şifre yazıldı");
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         System.out.println("Giriş yap butonu tıklandı");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.urlToBe("https://www.trendyol.com/butik/liste/1/kadin?from=login"));
 
-        Assertions.assertEquals("https://www.trendyol.com/butik/liste/1/kadin?from=login", driver.getCurrentUrl(), "Yönlendirme başarıyla yapıldı...");
-        Thread.sleep(2000);
+        baseTest.waitUntilVisible(driver, By.xpath("//div[contains(@class,'account-user')]//p[contains(text(),'Hesabım')]"));
+
+        driver.get("https://www.trendyol.com/trendyol-plus/aylik-trendyol-plus-p-927952329?boutiqueId=682261&merchantId=109");
+        WebElement cartBtn = baseTest.waitUntilClickable(driver, By.cssSelector("button[data-testid='add-to-cart-button']"));
+        cartBtn.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("https://www.trendyol.com/sepet-oneri/trendyol-plus/aylik-trendyol-plus-p-927952329?boutiqueId=682261&merchantId=109"));
+
+        driver.get("https://www.trendyol.com/sepet");
+
+        WebElement urun = baseTest.waitUntilVisible(driver,
+                By.xpath("//p[contains(@class,'pb-item') and contains(text(),'Trendyol Plus Üyelik Paketi')]"));
+
+        Assertions.assertTrue(urun.isDisplayed(), "✅ Ürün sepette bulundu");
+        System.out.println("✅ Sepette ürün doğrulandı");
 
     }
 
