@@ -23,7 +23,7 @@ public class FollowTest {
     @BeforeEach
     public void setup() {
         WebDriverManager.chromedriver().setup(); // Driver'ı indirir
-        driver = new ChromeDriver();             // Chrome başlatır
+        driver = new ChromeDriver();             // Chrome başlatı
         System.out.println("Chrome driver başlatıldı");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
