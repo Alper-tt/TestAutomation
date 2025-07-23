@@ -1,4 +1,4 @@
-package com.trendyol.FollowTest;
+package com.trendyol.cart;
 
 import com.trendyol.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class FollowTest {
+public class CartTest {
 
     WebDriver driver;
     BaseTest baseTest;
@@ -23,7 +23,7 @@ public class FollowTest {
     @BeforeEach
     public void setup() {
         WebDriverManager.chromedriver().setup(); // Driver'ı indirir
-        driver = new ChromeDriver();             // Chrome başlatı
+        driver = new ChromeDriver();             // Chrome başlatır
         System.out.println("Chrome driver başlatıldı");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
@@ -57,24 +57,19 @@ public class FollowTest {
         baseTest.waitUntilVisible(driver, By.xpath("//div[contains(@class,'account-user')]//p[contains(text(),'Hesabım')]"));
 
         driver.get("https://www.trendyol.com/trendyol-plus/aylik-trendyol-plus-p-927952329?boutiqueId=682261&merchantId=109");
-// 1. Takip Et butonuna tıkla
-        Thread.sleep(10000);
-        WebElement takipEtButonu = baseTest.waitUntilClickable(driver,
-                By.cssSelector("button.follow-and-win-button-follow-and-win-button"));
-        takipEtButonu.click();
-        System.out.println("Takip Et butonuna tıklandı");
+        WebElement cartBtn = baseTest.waitUntilClickable(driver, By.cssSelector("button[data-testid='add-to-cart-button']"));
+        cartBtn.click();
 
-// 2. "Takip Ediliyor" metni görününceye kadar bekle
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        Boolean takipEdildi = wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                By.cssSelector("button.follow-and-win-button-follow-and-win-button"),
-                "Takip Ediliyor"
-        ));
+        wait.until(ExpectedConditions.urlToBe("https://www.trendyol.com/sepet-oneri/trendyol-plus/aylik-trendyol-plus-p-927952329?boutiqueId=682261&merchantId=109"));
 
-// 3. Kontrol
-        Assertions.assertTrue(takipEdildi, "Takip işlemi başarıyla gerçekleştirildi.");
-        System.out.println("Takip işlemi başarılı: 'Takip Ediliyor' butonu göründü.");
-        Thread.sleep(10000);
+        driver.get("https://www.trendyol.com/sepet");
+
+        WebElement urun = baseTest.waitUntilVisible(driver,
+                By.xpath("//p[contains(@class,'pb-item') and contains(text(),'Trendyol Plus Üyelik Paketi')]"));
+
+        Assertions.assertTrue(urun.isDisplayed(), "✅ Ürün sepette bulundu");
+        System.out.println("✅ Sepette ürün doğrulandı");
 
     }
 
