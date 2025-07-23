@@ -31,7 +31,7 @@ public class FavoriteTest {
     }
 
     @Test
-    public void testIncorrectThenCorrectLogin() throws InterruptedException {
+    public void favoriteTest() throws InterruptedException {
         driver.get("https://www.trendyol.com");
         System.out.println("Trendyol.com ziyaret edildi");
         baseTest.selectGender(driver,"kadın"); // dinamik cinsiyet seçim yapısı
@@ -42,14 +42,12 @@ public class FavoriteTest {
         girisYapButonu.click();
         System.out.println("Giris yap butonu tıklandı");
 
-
-
         System.out.println("Doğru bilgilerle giriş yapılıyor");
         WebElement email = baseTest.waitUntilVisible(driver, By.id("login-email"));
         WebElement password = baseTest.waitUntilVisible(driver, By.id("login-password-input"));
-        email.sendKeys("curat.orc.v.n@gmail.com");
+        email.sendKeys("alpertopraktepe46@gmail.com");
         System.out.println("Mail yazıldı");
-        password.sendKeys("ETMv3ynRHJv80Gt");
+        password.sendKeys("Alper1903bjk*");
         System.out.println("Şifre yazıldı");
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         System.out.println("Giriş yap butonu tıklandı");
@@ -57,12 +55,19 @@ public class FavoriteTest {
         baseTest.waitUntilVisible(driver, By.xpath("//div[contains(@class,'account-user')]//p[contains(text(),'Hesabım')]"));
 
         driver.get("https://www.trendyol.com/trendyol-plus/aylik-trendyol-plus-p-927952329?boutiqueId=682261&merchantId=109");
-        WebElement favButonu = baseTest.waitUntilClickable(driver, By.cssSelector("button[data-testid='favorite-button']"));
+
+        WebElement favButonu = driver.findElement(By.cssSelector("button[data-testid='favorite-button']"));
         favButonu.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.attributeContains(
+                By.cssSelector("button[data-testid='favorite-button'] i"),
+                "class",
+                "i-heart-orange"
+        ));
 
         driver.get("https://www.trendyol.com/hesabim/favoriler");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement favoriUrun = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//div[contains(@class, 'product-card')]//span[contains(text(),'Aylık Trendyol Plus')]")
         ));

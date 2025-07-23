@@ -1,0 +1,39 @@
+[
+  {
+    "key": "login_email_field",
+    "value": "login-email",
+    "type": "id"
+  },
+  {
+    "key": "login_pw_field",
+    "value": "login-password-input",
+    "type": "id"
+  },
+  {
+    "key": "submit_btn",
+    "value": "button[type='submit']",
+    "type": "css"
+  },
+  {
+    "key": "login_error_box",
+    "value": "error-box-wrapper",
+    "type": "id"
+  },
+  {
+    "key": "hesabim_text",
+    "value": "//p[text()='Hesabım']",
+    "type": "xpath"
+  },
+  {
+    "key": "add_cart_btn",
+    "value": "button[data-testid='add-to-cart-button']",
+    "type": "css"
+  },
+  {
+    "key": "product_text",
+    "value": "//p[contains(@class,'pb-item') and contains(text(),'Trendyol Plus Üyelik Paketi')]",
+    "type": "xpath"
+  }
+]
+
+

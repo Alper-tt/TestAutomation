@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/java/com/trendyol/features",
-        glue = "com.trendyol.stepdefs",
+        glue = {"com.trendyol.stepdefs", "com.trendyol.hooks"},
         plugin = {"pretty", "html:target/cucumber-reports.html"},
         monochrome = true
 )
