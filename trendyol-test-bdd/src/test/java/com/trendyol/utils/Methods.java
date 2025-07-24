@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trendyol.hooks.Hooks;
 import com.trendyol.model.ElementModel;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -83,8 +84,29 @@ public class Methods {
     }
 
     public void assertElementVisible(String key) {
-        if (!isDisplayed(key)) {
-            throw new AssertionError("Element görünür değil: " + key);
+        Assertions.assertTrue(isDisplayed(key), "Element görünür değil: " + key);
+    }
+
+    public void waitForElementAttributeContains(String key, String attribute, String expectedValue, int timeoutSeconds) {
+        WebDriverWait localWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        localWait.until(ExpectedConditions.attributeContains(getBy(key), attribute, expectedValue));
+    }
+
+    public void removeOverlayByJS() {
+        try {
+            WebElement overlay = driver.findElement(By.cssSelector("div.onboarding-tour__overlay"));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].remove();", overlay);
+            System.out.println("Overlay JS ile kaldırıldı.");
+        } catch (NoSuchElementException e) {
+            System.out.println("Overlay zaten yok.");
+        }
+    }
+    public void waitForTextInElement(String key, String expectedText, int timeoutInSeconds) {
+        By locator = getBy(key);
+        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        boolean textFound = customWait.until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
+        if (!textFound) {
+            throw new AssertionError("Beklenen metin bulunamadı: " + expectedText);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.trendyol.stepdefs;
 
 import com.trendyol.BaseTest;
 import com.trendyol.utils.DriverManager;
+import com.trendyol.utils.Methods;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -35,7 +36,7 @@ public class CommonSteps {
     @And("kullanıcı giriş yapar")
     public void girisYapilir() {
         baseTest.waitUntilVisible(driver, By.id("login-email")).sendKeys("alpertopraktepe46@gmail.com");
-        baseTest.waitUntilVisible(driver, By.id("login-password-input")).sendKeys("Alper1903bjk*");
+        baseTest.waitUntilVisible(driver, By.id("login-password-input")).sendKeys("dogruSifre");
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         baseTest.waitUntilVisible(driver, By.xpath("//div[contains(@class,'account-user')]//p[contains(text(),'Hesabım')]"));
     }
@@ -43,5 +44,6 @@ public class CommonSteps {
     @When("ürün detay sayfasına gider")
     public void urunDetaySayfasinaGider() {
         driver.get(urunURL);
+        new Methods().removeOverlayByJS();
     }
 }

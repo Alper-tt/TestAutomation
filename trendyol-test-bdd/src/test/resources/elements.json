@@ -33,6 +33,31 @@
     "key": "product_text",
     "value": "//p[contains(@class,'pb-item') and contains(text(),'Trendyol Plus Üyelik Paketi')]",
     "type": "xpath"
+  },
+  {
+    "key": "add_favorite_btn",
+    "value": "button[data-testid='favorite-button']",
+    "type": "css"
+  },
+  {
+    "key": "fav_button_icon",
+    "value": "button[data-testid='favorite-button'] i",
+    "type": "css"
+  },
+  {
+    "key": "favorite_product_title",
+    "value": "//div[contains(@class, 'product-card')]//span[contains(text(),'Aylık Trendyol Plus')]",
+    "type": "xpath"
+  },
+  {
+    "key": "favorites_menu_link",
+    "value": "//p[text()='Favorilerim']/ancestor::div[contains(@class, 'link')]",
+    "type": "xpath"
+  },
+  {
+    "key": "follow_btn",
+    "value": "button.follow-and-win-button-follow-and-win-button",
+    "type": "css"
   }
 ]
 
