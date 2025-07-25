@@ -17,12 +17,12 @@ public class FollowSteps {
     FollowPage followPage = new FollowPage();
 
     @And("takip et butonuna tıklar")
-    public void takipEtButonunaTiklar() {
+    public void takipEtButonunaTiklar() throws InterruptedException{
         followPage.clickFollowButton();
     }
 
     @Then("mağaza başarıyla takip edilmiş olmalı")
-    public void takipDurumuKontrolEdilir() throws InterruptedException {
+    public void takipDurumuKontrolEdilir() {
         followPage.checkFollowStatus();
     }
 }

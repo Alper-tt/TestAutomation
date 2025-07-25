@@ -6,12 +6,12 @@ public class FollowPage {
 
     Methods methods = new Methods();
 
-    public void clickFollowButton(){
+    public void clickFollowButton() throws InterruptedException{
+        Thread.sleep(2000);
         methods.click("follow_btn");
     }
 
-    public void checkFollowStatus() throws InterruptedException {
-        Thread.sleep(2000);
+    public void checkFollowStatus()  {
         methods.waitForTextInElement("follow_btn", "Takip Ediliyor", 10);
     }
 }
